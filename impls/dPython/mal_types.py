@@ -27,3 +27,6 @@ class Symbol(MalType):
 
     def __init__(self, value: str):
         self.value = value
+
+    def is_same_as(self, symbol):
+        return self.value == symbol.value

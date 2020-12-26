@@ -1,12 +1,8 @@
 from reader import read_str
 from printer import pr_str
 from evaluator import eval_ast
-from mal_types import Number, List
-
-repl_env = {'+': lambda a, b: Number(a.value + b.value),
-            '-': lambda a, b: Number(a.value - b.value),
-            '*': lambda a, b: Number(a.value * b.value),
-            '/': lambda a, b: Number(a.value // b.value)}
+from mal_types import Number, Symbol, List
+from env import Env
 
 
 def READ():
@@ -30,6 +26,11 @@ def PRINT(result):
 
 def main():
     status = True
+    repl_env = Env(outer=None)
+    repl_env[Symbol("+")] = lambda a, b: Number(a.value + b.value)
+    repl_env[Symbol('-')] = lambda a, b: Number(a.value - b.value)
+    repl_env[Symbol('*')] = lambda a, b: Number(a.value * b.value)
+    repl_env[Symbol('/')] = lambda a, b: Number(a.value // b.value)
     while status:
         try:
             rep(repl_env)

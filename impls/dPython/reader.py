@@ -2,6 +2,7 @@ from re import findall
 from mal_types import Number, Symbol, List
 from helper_utils import isInteger
 
+
 class Reader(object):
 
     def __init__(self, tokens):
@@ -12,7 +13,7 @@ class Reader(object):
         if (self.current_position >= 0) and (self.current_position < len(self.token_list)):
             return self.token_list[self.current_position]
         else:
-            raise OverflowError("Reader: Invalid state encountered.")
+            raise IndexError("Reader: Invalid state encountered.")
 
     def next(self):
         current_token = self._get_current_token()
@@ -36,7 +37,7 @@ def read_form(parser: Reader):
 
 def read_list(parser: Reader):
     if parser.next() != "(":
-        raise EnvironmentError("Invalid first token encountered in list.")
+        raise SyntaxError("Invalid first token encountered in list.")
 
     result = List([])
 
