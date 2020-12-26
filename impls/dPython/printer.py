@@ -1,19 +1,18 @@
-from token_types import Number, Symbol, LeftParen, RightParen
+from mal_types import Number, Symbol, List
 
 
-def pr_str(result, sep=" "):
+def pr_str(result):
 
-    if isinstance(result, list):
-        output = ""
+    if isinstance(result, List):
+        output = "("
         for i, elem in enumerate(result):
-            sep = "" if i < len(result) - 1 and isinstance(result[i+1], RightParen) else " "
-            output += pr_str(elem, sep=sep)
+            sep = "" if i == len(result) - 1 else " "
+            output += pr_str(elem) + sep
+        output += ")"
     elif isinstance(result, Number):
-        output = str(result.value) + sep
-    elif isinstance(result, (LeftParen, RightParen)):
-        output = result.value
+        output = str(result.value)
     elif isinstance(result, Symbol):
-        output = result.value + sep
+        output = result.value
     else:
         raise NotImplementedError("Invalid token: Token not yet implemented.")
 

@@ -1,5 +1,5 @@
 from re import findall
-from token_types import Number, Symbol, LeftParen, RightParen
+from mal_types import Number, Symbol, List
 
 
 class Reader(object):
@@ -27,8 +27,7 @@ class Reader(object):
 
 
 def read_form(parser: Reader):
-    current_token = parser.peek()
-    if current_token == "(":
+    if parser.peek() == "(":
         result = read_list(parser)
     else:
         result = read_atom(parser)
@@ -36,11 +35,10 @@ def read_form(parser: Reader):
 
 
 def read_list(parser: Reader):
-
     if parser.next() != "(":
         raise EnvironmentError("Invalid first token encountered in list.")
 
-    result = [LeftParen()]
+    result = List([])
 
     while not parser.has_reached_EOF() and parser.peek() != ")":
         result.append(read_form(parser))
@@ -49,7 +47,6 @@ def read_list(parser: Reader):
         raise SyntaxError("Missing matching ')' for a list")
 
     parser.next()
-    result.append(RightParen())
     return result
 
 
