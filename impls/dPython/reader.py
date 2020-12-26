@@ -1,6 +1,6 @@
 from re import findall
 from mal_types import Number, Symbol, List
-
+from helper_utils import isInteger
 
 class Reader(object):
 
@@ -52,7 +52,7 @@ def read_list(parser: Reader):
 
 def read_atom(parser: Reader):
     current_token = parser.next()
-    if current_token.isdigit():
+    if isInteger(current_token):
         result = Number(int(current_token))
     else:
         result = Symbol(current_token)

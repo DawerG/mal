@@ -2,7 +2,6 @@ from mal_types import Number, Symbol, List
 
 
 def pr_str(result):
-
     if isinstance(result, List):
         output = "("
         for i, elem in enumerate(result):
