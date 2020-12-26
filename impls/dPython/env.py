@@ -1,16 +1,13 @@
 import logging
+from mal_types import Number, Symbol
+
+
 class Env(object):
     def __init__(self, outer):
         self.map = {}
+        if outer is None:
+            self.initialize()
         self.parent = outer
-
-    def __setitem__(self, symbol, value):
-        key = symbol.value
-
-        if key in self.map:
-            logging.warning(f" Symbol {key} already exists in the environment.")
-
-        self.map[key] = value
 
     def find(self, symbol):
         key = symbol.value
@@ -21,6 +18,20 @@ class Env(object):
         else:
             raise ValueError(f"Symbol {key} not found in the environment.")
 
+    def __setitem__(self, symbol, value):
+        key = symbol.value
+
+        if key in self.map:
+            logging.warning(f" Symbol {key} already exists in the environment.")
+
+        self.map[key] = value
+
     def __getitem__(self, symbol):
         key = symbol.value
         return self.find(symbol).map[key]
+
+    def initialize(self):
+        self[Symbol("+")] = lambda a, b: Number(a.value + b.value)
+        self[Symbol('-')] = lambda a, b: Number(a.value - b.value)
+        self[Symbol('*')] = lambda a, b: Number(a.value * b.value)
+        self[Symbol('/')] = lambda a, b: Number(a.value // b.value)

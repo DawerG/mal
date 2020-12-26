@@ -46,10 +46,6 @@ def PRINT(result):
 def main():
     status = True
     repl_env = Env(outer=None)
-    repl_env[Symbol("+")] = lambda a, b: Number(a.value + b.value)
-    repl_env[Symbol('-')] = lambda a, b: Number(a.value - b.value)
-    repl_env[Symbol('*')] = lambda a, b: Number(a.value * b.value)
-    repl_env[Symbol('/')] = lambda a, b: Number(a.value // b.value)
     while status:
         try:
             rep(repl_env)
