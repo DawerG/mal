@@ -1,6 +1,6 @@
 from re import findall
 from mal_types import Number, Symbol, List
-from helper_utils import isInteger
+from helper_utils import is_integer
 
 
 class Reader(object):
@@ -28,11 +28,7 @@ class Reader(object):
 
 
 def read_form(parser: Reader):
-    if parser.peek() == "(":
-        result = read_list(parser)
-    else:
-        result = read_atom(parser)
-    return result
+    return read_list(parser) if parser.peek() == "(" else read_atom(parser)
 
 
 def read_list(parser: Reader):
@@ -53,7 +49,7 @@ def read_list(parser: Reader):
 
 def read_atom(parser: Reader):
     current_token = parser.next()
-    if isInteger(current_token):
+    if is_integer(current_token):
         result = Number(int(current_token))
     else:
         result = Symbol(current_token)

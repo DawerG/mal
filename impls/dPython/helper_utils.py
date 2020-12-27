@@ -1,6 +1,7 @@
 from re import search
 
-def isInteger(string: str):
+
+def is_integer(string: str):
     result = False
     if search(r"-*[0-9]+", string):
         result = True

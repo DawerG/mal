@@ -1,6 +1,8 @@
 import logging
 from mal_types import Number, Symbol
 
+logger = logging.getLogger(__name__)
+
 
 class Env(object):
     def __init__(self, outer):
@@ -22,7 +24,7 @@ class Env(object):
         key = symbol.value
 
         if key in self.map:
-            logging.warning(f" Symbol {key} already exists in the environment.")
+            logger.warning(f" Symbol {key} already exists in the environment.")
 
         self.map[key] = value
 
