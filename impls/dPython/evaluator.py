@@ -1,5 +1,5 @@
 import logging
-from mal_types import Symbol, Number, List
+from mal_types import Symbol, Number, List, Boolean, NoneType
 from env import Env
 
 logger = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ def eval_ast(ast, env):
 def eval_atom(atom, env):
     if isinstance(atom, Symbol):
         return env[atom]
-    elif isinstance(atom, Number):
+    elif isinstance(atom, (Number, Boolean, NoneType)):
         return atom
     else:
         raise NotImplementedError(f"Atom {atom} not yet handled.")

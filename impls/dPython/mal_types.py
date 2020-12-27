@@ -30,3 +30,15 @@ class Symbol(MalType):
 
     def is_same_as(self, symbol):
         return self.value == symbol.value
+
+
+class Boolean(MalType):
+
+    def __init__(self, value: bool):
+        self.value = value
+
+
+class NoneType(MalType):
+
+    def __init__(self):
+        self.value = None

@@ -1,6 +1,5 @@
 import logging
 
-from sys import stdin
 from reader import read_str
 from printer import pr_str
 from evaluator import eval_ast
@@ -8,8 +7,11 @@ from env import Env
 
 logger = logging.getLogger(__name__)
 
+
 def READ():
     raw_input = input("user> ")
+    if raw_input in ["q", "exit"]:
+        raise EOFError
     return read_str(raw_input)
 
 
@@ -31,10 +33,10 @@ def main():
             rep(repl_env)
         except EOFError:
             status = False
-            logger.info("Bye Gitesh :)")
+            print("Bye Gitesh :)")
         except Exception as e:
             logger.exception("Exception occurred.\n")
-            stdin.flush()
+
 
 def rep(env):
     command = READ()

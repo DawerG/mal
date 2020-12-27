@@ -1,5 +1,5 @@
 from re import findall
-from mal_types import Number, Symbol, List
+from mal_types import Number, Symbol, List, Boolean, NoneType
 from helper_utils import is_integer
 
 
@@ -51,6 +51,10 @@ def read_atom(parser: Reader):
     current_token = parser.next()
     if is_integer(current_token):
         result = Number(int(current_token))
+    elif current_token in ["true", "false"]:
+        result = Boolean(True if current_token == "true" else False)
+    elif current_token == "nil":
+        result = NoneType()
     else:
         result = Symbol(current_token)
     return result
