@@ -1,5 +1,5 @@
 import logging
-from mal_types import Symbol, Number, List, Boolean, NoneType
+from mal_types import Symbol, Number, List, Boolean, NoneType, FunctionType
 from env import Env
 
 logger = logging.getLogger(__name__)
@@ -34,9 +34,17 @@ def eval_list(alist, env):
             i += 2
 
         result = eval_ast(alist[2], let_env)
+    elif isinstance(alist[0], Symbol) and alist[0].is_same_as(Symbol("fn*")):
+        result = FunctionType(params=alist[1], body=alist[2], env=env)
     else:
         func = eval_ast(alist[0], env)
         args = [eval_ast(elem, env) for elem in alist[1:]]
-        result = func(*args)
+        if isinstance(func, FunctionType):
+            func_env = Env(outer=func.closed_env)
+            for k, v in zip(func.parameters, args):
+                func_env[k] = v
+            result = eval_ast(func.body, env=func_env)
+        else:
+            result = func(*args)
 
     return result

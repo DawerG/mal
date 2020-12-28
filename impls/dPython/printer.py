@@ -1,4 +1,4 @@
-from mal_types import Number, Symbol, List, Boolean, NoneType
+from mal_types import Number, Symbol, List, Boolean, NoneType, FunctionType
 
 
 def pr_str(result):
@@ -16,6 +16,8 @@ def pr_str(result):
         output = "true" if result.value else "false"
     elif isinstance(result, NoneType):
         output = "nil"
+    elif isinstance(result, FunctionType):
+        output = "#<function>"
     else:
         raise NotImplementedError("Invalid token: Token not yet implemented.")
 

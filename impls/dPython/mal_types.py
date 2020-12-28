@@ -42,3 +42,11 @@ class NoneType(MalType):
 
     def __init__(self):
         self.value = None
+
+
+class FunctionType(MalType):
+
+    def __init__(self, params, body: MalType, env):
+        self.parameters = params
+        self.body = body
+        self.closed_env = env
