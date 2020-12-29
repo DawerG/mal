@@ -22,6 +22,16 @@ def eval_list(alist, env):
     if isinstance(alist[0], Symbol) and alist[0].is_same_as(Symbol("def!")):
         result = eval_ast(alist[2], env)
         env[alist[1]] = result
+    elif isinstance(alist[0], Symbol) and alist[0].is_same_as(Symbol("do")):
+        for elem in alist[1:-1]:
+            eval_ast(elem, env)
+        result = eval_ast(alist[-1], env)
+    elif isinstance(alist[0], Symbol) and alist[0].is_same_as(Symbol("if")):
+        condition = eval_ast(alist[1], env)
+        if isinstance(condition, NoneType) or (isinstance(condition, Boolean) and not condition.value):
+            result = eval_ast(alist[3], env) if len(alist) == 4 else NoneType()
+        else:
+            result = eval_ast(alist[2], env)
     elif isinstance(alist[0], Symbol) and alist[0].is_same_as(Symbol("let*")):
         let_env = Env(outer=env)
         param_bindings = alist[1]

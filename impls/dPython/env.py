@@ -7,8 +7,6 @@ logger = logging.getLogger(__name__)
 class Env(object):
     def __init__(self, outer):
         self.map = {}
-        if outer is None:
-            self.initialize()
         self.parent = outer
 
     def find(self, symbol):
@@ -31,9 +29,3 @@ class Env(object):
     def __getitem__(self, symbol):
         key = symbol.value
         return self.find(symbol).map[key]
-
-    def initialize(self):
-        self[Symbol("+")] = lambda a, b: Number(a.value + b.value)
-        self[Symbol('-')] = lambda a, b: Number(a.value - b.value)
-        self[Symbol('*')] = lambda a, b: Number(a.value * b.value)
-        self[Symbol('/')] = lambda a, b: Number(a.value // b.value)

@@ -1,7 +1,7 @@
 from mal_types import Number, Symbol, List, Boolean, NoneType, FunctionType
 
 
-def pr_str(result):
+def pr_str(result, print_readably=True):
     if isinstance(result, List):
         output = "("
         for i, elem in enumerate(result):
@@ -19,6 +19,6 @@ def pr_str(result):
     elif isinstance(result, FunctionType):
         output = "#<function>"
     else:
-        raise NotImplementedError("Invalid token: Token not yet implemented.")
+        raise NotImplementedError("Invalid Type: Type {result} not yet implemented.")
 
     return output

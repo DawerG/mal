@@ -2,6 +2,11 @@ from re import findall
 from mal_types import Number, Symbol, List, Boolean, NoneType
 from helper_utils import is_integer
 
+matching_token = {
+    "[": "]",
+    "(": ")"
+}
+
 
 class Reader(object):
 
@@ -28,16 +33,18 @@ class Reader(object):
 
 
 def read_form(parser: Reader):
-    return read_list(parser) if parser.peek() == "(" else read_atom(parser)
+    return read_list(parser) if parser.peek() in matching_token else read_atom(parser)
 
 
 def read_list(parser: Reader):
-    if parser.next() != "(":
+
+    begin_token = parser.next()
+    if begin_token not in matching_token:
         raise SyntaxError("Invalid first token encountered in list.")
 
     result = List([])
 
-    while not parser.has_reached_EOF() and parser.peek() != ")":
+    while not parser.has_reached_EOF() and parser.peek() != matching_token[begin_token]:
         result.append(read_form(parser))
 
     if parser.has_reached_EOF():
